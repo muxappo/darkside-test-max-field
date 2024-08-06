@@ -7,6 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { usePage } from "@inertiajs/vue3";
 
 const csrfToken = usePage().props.csrfToken;
+const customer = usePage().props.customer;
 </script>
 
 <template>
@@ -15,31 +16,40 @@ const csrfToken = usePage().props.csrfToken;
   <AuthenticatedLayout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Create Customer
+        Update Customer
       </h2>
     </template>
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <header class="p-6 text-gray-900">Create Customer</header>
-          <form :action="route('customers.store')" class="m-4" method="post">
+          <header class="p-6 text-gray-900">Update Customer</header>
+          <form :action="route('customers.update')" class="m-4" method="post">
             <input type="hidden" name="_token" :value="csrfToken" />
+            <input type="hidden" name="id" :value="customer.id" />
             <div>
               <InputLabel for="first_name" value="First Name" />
-              <TextInput id="first_name" name="first_name" />
+              <Input
+                id="first_name"
+                name="first_name"
+                :value="customer.first_name"
+              />
             </div>
             <div>
               <InputLabel for="last_name" value="Last Name" />
-              <TextInput id="last_name" name="last_name" />
+              <Input
+                id="last_name"
+                name="last_name"
+                :value="customer.last_name"
+              />
             </div>
             <div>
               <InputLabel for="email" value="Email" />
-              <TextInput id="email" name="email" />
+              <Input id="email" name="email" :value="customer.email" />
             </div>
             <div>
               <InputLabel for="phone" value="Phone" />
-              <TextInput id="phone" name="phone" />
+              <Input id="phone" name="phone" :value="customer.phone" />
             </div>
             <div>
               <PrimaryButton>Save</PrimaryButton>

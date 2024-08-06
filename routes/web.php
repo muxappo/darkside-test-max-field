@@ -28,6 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'customers'], function() {
         Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
         Route::get('/create', [CustomerController::class, 'create'])->name('customers.create');
+        Route::post('/store', [CustomerController::class, 'store'])->name('customers.store');
+        Route::get('/view/{id}', [CustomerController::class, 'view'])->name('customers.view');
+        Route::post('update', [CustomerController::class, 'update'])->name('customers.update');
+        Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customers.delete');
     });
 
 });

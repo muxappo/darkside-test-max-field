@@ -1,6 +1,9 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
+
+const customers = usePage().props.customers;
 </script>
 
 <template>
@@ -19,16 +22,24 @@ import { Head } from "@inertiajs/vue3";
           <header class="py-4 text-gray-900">All Customers</header>
           <table>
             <tr>
+              <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Phone No.</th>
+              <th>Phone</th>
+              <th>Actions</th>
             </tr>
-            <tr>
-              <td>Johan</td>
-              <td>Hegg</td>
-              <td>johanhegg@metalblade.com</td>
-              <td>07742949134</td>
+
+            <tr v-for="(customer, index) in customers">
+              <td>{{ customer.id }}</td>
+              <td>{{ customer.first_name }}</td>
+              <td>{{ customer.last_name }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.phone }}</td>
+              <td>
+                <a :href="customer.viewUrl">View</a>
+                <a :href="customer.deleteUrl">Delete</a>
+              </td>
             </tr>
           </table>
           <button
