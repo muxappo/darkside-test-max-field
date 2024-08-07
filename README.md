@@ -1,6 +1,6 @@
 # Darkside Developments Technical Test - Max Field
 
-Based on the provided brief, this is a simple dashboard allowing for the creation and storage of customer information using forms, including a visualisation of created data in the form of a table, styled with TailwindCSS on Vue.js
+Based on the provided brief, this is a simple dashboard allowing for the creation and storage of customer information in a SQLite database, including a visualisation of created data in the form of a table, built with PHP/Laravel and styled with TailwindCSS on Vue.js.
 
 
 ## Run Locally
