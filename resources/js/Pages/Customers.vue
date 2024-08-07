@@ -2,6 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { usePage } from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const customers = usePage().props.customers;
 </script>
@@ -19,10 +20,12 @@ const customers = usePage().props.customers;
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="p-4 bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <header class="py-4 text-gray-900">All Customers</header>
-          <table>
+          <header class="py-4 text-gray-900">Customer Details</header>
+
+          <!-- conditional rendering of the table; only displays the table when the customers array contains data to fill the cells -->
+
+          <table v-if="customers.length > 0" class="w-full">
             <tr>
-              <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
@@ -30,23 +33,33 @@ const customers = usePage().props.customers;
               <th>Actions</th>
             </tr>
 
+            <!-- v-for loop to iterate through the customers array and build the frontend table -->
+
             <tr v-for="(customer, index) in customers">
-              <td>{{ customer.id }}</td>
               <td>{{ customer.first_name }}</td>
               <td>{{ customer.last_name }}</td>
               <td>{{ customer.email }}</td>
               <td>{{ customer.phone }}</td>
-              <td>
-                <a :href="customer.viewUrl">View</a>
-                <a :href="customer.deleteUrl">Delete</a>
+              <td class="pt-2">
+                <PrimaryButton class="mr-2">
+                  <a :href="customer.viewUrl">View / Edit</a>
+                </PrimaryButton>
+                <PrimaryButton>
+                  <a :href="customer.deleteUrl">Delete</a>
+                </PrimaryButton>
               </td>
             </tr>
           </table>
-          <button
-            class="items-center my-4 px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-          >
-            <a :href="route('customers.create')">Create Customer</a>
-          </button>
+
+          <!-- if no data is retrieved, a notice message to create an entry is displayed instead -->
+
+          <p v-else>
+            Notice: No customers available, please click below to create a new
+            entry.
+          </p>
+          <PrimaryButton class="mt-4">
+            <a :href="route('customers.create')">Create New Entry </a>
+          </PrimaryButton>
         </div>
       </div>
     </div>

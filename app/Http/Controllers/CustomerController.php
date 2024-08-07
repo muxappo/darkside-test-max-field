@@ -11,6 +11,11 @@ class CustomerController extends Controller
 {
     public function index() {
 
+        /*
+        Customer index func to retrieve the list of customers in the db 
+        and assign routes to view/delete the entry if required
+        */
+
         $customers = Customer::orderBy('created_at', 'desc')->get();
 
         foreach($customers AS $customer) {
@@ -22,13 +27,18 @@ class CustomerController extends Controller
     }
 
     public function create() {
+        // Func to make the csrf token available for new customer creation
+
         return Inertia::render("Customers/Create", [
             'csrfToken' => csrf_token(),
         ]);
     }
 
+
     public function store(Request $request)
     {
+        // Func to add a customer to the database after details are saved from the creation form
+
         $customer = new Customer;
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
@@ -36,10 +46,13 @@ class CustomerController extends Controller
         $customer->phone = $request->phone;
         $customer->save();
 
+        // Redirect user to index page upon completion
+
         return redirect(route('customers.index'));
     }
-
     public function update(Request $request) {
+
+        // Func to update customer details from view/edit page
 
         $customer = Customer::where('id', $request->id)->first();
         $customer->first_name = $request->first_name;
@@ -48,10 +61,14 @@ class CustomerController extends Controller
         $customer->phone = $request->phone;
         $customer->save();
 
+        // Redirect user to index page upon completion
+
         return redirect(route('customers.index'));
     }
 
     public function view(int $id) {
+
+        // Func to retrieve a customer's view route by db ID
 
         $customer = Customer::where('id', $id)->first();
 
@@ -63,6 +80,8 @@ class CustomerController extends Controller
     }
 
     public function delete(int $id) {
+        // Func to retrive a customer's delete route by db ID
+
         Customer::where('id', $id)->delete();
         return redirect(route('customers.index'));
     }
